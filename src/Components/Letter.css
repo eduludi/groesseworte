@@ -1,0 +1,18 @@
+.Letter {
+    font-size: 4em;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.Letter input {
+    border: none;
+    position: absolute;
+    background: transparent;
+    left: 0;
+    top: 0;
+    color: transparent;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
