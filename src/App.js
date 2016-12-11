@@ -27,11 +27,9 @@ class App extends Component {
 	}
 
 	render() {
-		const { gameName } = this.state
 
-		const game = gameName ? Games[gameName] : null
-
-		const games = Object.entries(Games).map( ([key,game]) => {
+		const games = Object.keys(Games).map( (key) => {
+			const game = Games[key]
 			return (
 				<div className="GameItem" 
 					key={key}>
@@ -47,6 +45,9 @@ class App extends Component {
 				</div>
 			)
 		})
+
+		const { gameName } = this.state
+		const game = gameName ? Games[gameName] : null
 
 		return (
 			<div className="App">

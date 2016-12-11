@@ -63,6 +63,14 @@ class Letter extends Component {
                         y2={size.y2} 
                         stroke="gray" 
                         strokeWidth="3"/>
+
+                    <line 
+                        x1="0%" 
+                        y1="75%"
+                        x2="100%" 
+                        y2="75%"
+                        stroke="lightgray" 
+                        strokeWidth="1"/>
                     <text 
                         x="50%" 
                         y="50%" 
