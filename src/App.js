@@ -1,49 +1,77 @@
 import React, { Component } from 'react'
 
-import Word from './Components/Word'
-
-import GermanCities from './Data/GermanCities'
-
 import logo from './logo.svg'
 import './App.css'
 
+import Game from './Components/Game'
+import { Games } from './Data/GameData'
+
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { word: this.getRandomWord() }
-    this.handleChange = this.handleChange.bind(this)
-  }
+	constructor(props) {
+		super(props)
+		this.state = { 
+			gameName: null
+		}
+		this.handleChooseGame = this.handleChooseGame.bind(this)
+		this.handleBackToList = this.handleBackToList.bind(this)
+	}
 
-  getRandomWord() {
-    return GermanCities[Math.floor(Math.random() * GermanCities.length)];
-  }
+	handleChooseGame(event) {
+		const gameName = event.target.dataset.id
+		this.setState({ gameName: gameName });
+	}
 
-  handleChange(event) {
-    this.setState({ word: this.getRandomWord() });
-  }
-  render() {
 
-    const { word } = this.state
+	handleBackToList(event) {
+		this.setState({ gameName: null });
+	}
 
-    return (
-      <div className="App">
+	render() {
+		const { gameName } = this.state
 
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>GrößeWorte</h2>
-        </div>
+		const game = gameName ? Games[gameName] : null
 
-        <h1>Die Großstädte in Deutschland</h1>
+		const games = Object.entries(Games).map( ([key,game]) => {
+			return (
+				<div className="GameItem" 
+					key={key}>
+					<a 
+						href="#"
+						data-id={key}
+						onClick={this.handleChooseGame}>
+						{game.title}
+					</a>
+					<div>
+						<em>{game.level}</em> <small>({game.data.length} Worte)</small>
+					</div>
+				</div>
+			)
+		})
 
-        <Word value={word}/>
+		return (
+			<div className="App">
+				<div className="App-header">
+					<img src={logo} className="App-logo" alt="logo" />
+					<h2>GrößeWorte</h2>
+				</div>
+				
+				{ game 
+					? (
+						<div className="Playing">
+							<Game game={game}/>
 
-        <a className="Reset" onClick={this.handleChange}>Andere Stadt</a>
-        <p className="Cheat" >
-          <small>{word}</small>
-        </p>
-      </div>
-    )
-  }
+							<a className="Reset" onClick={this.handleBackToList}>Zuruck</a>
+						</div>
+					) 
+					: (
+						<div className="Games">
+							{games}
+						</div>
+					)
+				}
+			</div>
+		)
+	}
 }
 
 export default App
